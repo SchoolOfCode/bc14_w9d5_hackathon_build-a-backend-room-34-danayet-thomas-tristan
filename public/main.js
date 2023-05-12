@@ -11,17 +11,15 @@ ingredientButton.addEventListener("click", addIngredient);
 submitButton.addEventListener("click", handleSubmit);
 getRecipeButton.addEventListener("click", handleClick);
 
-
 function handleEdit(event) {
   event.preventDefault();
   console.log("edit button clicked");
-
 }
 
-function handleDelete(id, event) {
-  // event.preventDefault();
+async function handleDelete(id, event) {
   console.log("delete button clicked");
-  deleteRecipe(id);
+  await deleteRecipe(id);
+  await getRecipes();
 }
 
 function addIngredient(event) {
@@ -37,10 +35,9 @@ function addIngredient(event) {
   ingredientsList.appendChild(li);
 }
 
-function handleSubmit(event) {
-  event.preventDefault();
-
-  createRecipe();
+async function handleSubmit(event) {
+  await createRecipe();
+  await getRecipes();
 }
 
 async function createRecipe() {
@@ -79,14 +76,14 @@ function gatherFormData() {
 
 async function handleClick(event) {
   event.preventDefault();
-   await getRecipes();
+  await getRecipes();
 }
 
 async function getRecipes() {
   const response = await fetch(`${url}/recipes`);
   const { payload } = await response.json();
   recipesSection.innerHTML = "";
-  console.log({payload});
+  console.log({ payload });
   payload.forEach(renderRecipe);
 }
 
@@ -95,15 +92,24 @@ function renderRecipe(recipe) {
   recipesSection.appendChild(article);
 }
 
-function createRecipeView({event, id, title, ingredients, instructions, image }) {
+function createRecipeView({
+  event,
+  id,
+  title,
+  ingredients,
+  instructions,
+  image,
+}) {
   console.log({ title, ingredients });
   const deleteButton = document.createElement("button");
   deleteButton.innerText = "Delete";
-  deleteButton.addEventListener("click", function () { handleDelete(id, event); });
+  deleteButton.addEventListener("click", function () {
+    handleDelete(id, event);
+  });
   const editButton = document.createElement("button");
   editButton.innerText = "Edit";
   editButton.addEventListener("click", handleEdit);
-  const article =document .createElement("article");
+  const article = document.createElement("article");
   const h2 = document.createElement("h2");
   h2.innerText = title;
   const p = document.createElement("p");
@@ -112,7 +118,7 @@ function createRecipeView({event, id, title, ingredients, instructions, image })
   img.src = image;
   img.alt = title;
   const list = createIngredientsList(ingredients);
-  
+
   article.appendChild(h2);
   article.appendChild(img);
   article.appendChild(list);
