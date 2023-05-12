@@ -32,7 +32,7 @@ function handleSubmit(event) {
 
 async function createRecipe() {
   console.log(gatherFormData());
-  const response = await fetch(`${url}/api/recipes`, {
+  const response = await fetch(`${url}/recipes`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(gatherFormData()),
@@ -61,7 +61,7 @@ function handleClick(event) {
 }
 
 async function getRecipes() {
-  const response = await fetch(`${url}/api/recipes`);
+  const response = await fetch(`${url}/recipes`);
   const { payload } = await response.json();
   recipesSection.innerHTML = "";
   console.log(payload);
