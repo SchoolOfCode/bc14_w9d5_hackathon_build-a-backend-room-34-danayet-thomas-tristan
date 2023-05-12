@@ -64,7 +64,7 @@ async function getRecipes() {
   const response = await fetch(`${url}/recipes`);
   const { payload } = await response.json();
   recipesSection.innerHTML = "";
-  console.log(payload);
+  console.log({payload});
   payload.forEach(renderRecipe);
 }
 
@@ -74,6 +74,7 @@ function renderRecipe(recipe) {
 }
 
 function createRecipeView({ title, ingredients, instructions, image }) {
+  console.log({ title, ingredients });
   const article = document.createElement("article");
   const h2 = document.createElement("h2");
   h2.innerText = title;
@@ -83,6 +84,7 @@ function createRecipeView({ title, ingredients, instructions, image }) {
   img.src = image;
   img.alt = title;
   const list = createIngredientsList(ingredients);
+  
   article.appendChild(h2);
   article.appendChild(img);
   article.appendChild(list);

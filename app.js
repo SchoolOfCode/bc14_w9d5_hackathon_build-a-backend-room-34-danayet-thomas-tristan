@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.get("/recipes", async (req, res) => {
   const displayRecipes = await getRecipes();
-  res.send(displayRecipes);
+  res.send({ payload: displayRecipes });
   console.log("found recipes");
 });
 
