@@ -105,6 +105,8 @@ form button:hover {
   margin-bottom: 20px;
 }
 
+
+
 #recipes ul {
   padding-left: 20px;
   margin-bottom: 20px;
@@ -120,4 +122,18 @@ form button:hover {
   #get-recipes {
     max-width: 100%;
   }
+}
+
+
+
+#recipes button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #ff5722;
+  color: #fff;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+  margin-bottom: 20px;
 }

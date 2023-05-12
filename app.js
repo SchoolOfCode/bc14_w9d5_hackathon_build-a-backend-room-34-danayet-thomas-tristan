@@ -1,5 +1,6 @@
 import express from "express";
 
+
 import {
   getRecipes,
   getRecipeByID,
@@ -11,8 +12,24 @@ import {
 const app = express();
 const PORT = 3000;
 
+
 app.use(express.static("public"));
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log(
+    "Data added: ",
+    req.body,
+    " at ",
+    new Date(),
+    " by ",
+    req.ip,
+    " using ",
+    req.method,
+    " to ",
+    req.path
+  );
+  next();
+});
 
 app.get("/recipes", async (req, res) => {
   const displayRecipes = await getRecipes();
