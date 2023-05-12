@@ -11,6 +11,19 @@ ingredientButton.addEventListener("click", addIngredient);
 submitButton.addEventListener("click", handleSubmit);
 getRecipeButton.addEventListener("click", handleClick);
 
+
+function handleEdit(event) {
+  event.preventDefault();
+  console.log("edit button clicked");
+
+}
+
+function handleDelete(id, event) {
+  // event.preventDefault();
+  console.log("delete button clicked");
+  deleteRecipe(id);
+}
+
 function addIngredient(event) {
   event.preventDefault();
 
@@ -41,6 +54,15 @@ async function createRecipe() {
   console.log(data);
 }
 
+async function deleteRecipe(id) {
+  console.log(gatherFormData());
+  const response = await fetch(`${url}/recipes/${id}`, {
+    method: "DELETE",
+  });
+  const data = await response.json();
+  console.log(data);
+}
+
 function gatherFormData() {
   const title = document.querySelector("#title").value;
   const ingredientsList = document.querySelectorAll("#ingredients-list > li");
@@ -55,9 +77,9 @@ function gatherFormData() {
   };
 }
 
-function handleClick(event) {
+async function handleClick(event) {
   event.preventDefault();
-  getRecipes();
+   await getRecipes();
 }
 
 async function getRecipes() {
@@ -73,9 +95,15 @@ function renderRecipe(recipe) {
   recipesSection.appendChild(article);
 }
 
-function createRecipeView({ title, ingredients, instructions, image }) {
+function createRecipeView({event, id, title, ingredients, instructions, image }) {
   console.log({ title, ingredients });
-  const article = document.createElement("article");
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "Delete";
+  deleteButton.addEventListener("click", function () { handleDelete(id, event); });
+  const editButton = document.createElement("button");
+  editButton.innerText = "Edit";
+  editButton.addEventListener("click", handleEdit);
+  const article =document .createElement("article");
   const h2 = document.createElement("h2");
   h2.innerText = title;
   const p = document.createElement("p");
@@ -89,6 +117,8 @@ function createRecipeView({ title, ingredients, instructions, image }) {
   article.appendChild(img);
   article.appendChild(list);
   article.appendChild(p);
+  article.appendChild(deleteButton);
+  article.appendChild(editButton);
   return article;
 }
 
