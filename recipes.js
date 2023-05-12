@@ -19,8 +19,8 @@ export async function getRecipeByID(id) {
   try {
     const data = await fs.readFile(fileName);
     const recipes = JSON.parse(data); // same as before
-    const recipe = recipes.find((recipe) => recipe.id === id); // the variable "recipe" is the result of whatever the .find method returns
-    return recipe;
+    const recipeById = recipes.find((recipe) => recipe.id === id); // the variable "recipe" is the result of whatever the .find method returns
+    return recipeById;
   } catch (error) {
     console.log("Could not get recipe by ID", error);
   }
